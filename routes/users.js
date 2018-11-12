@@ -67,5 +67,4 @@ router.get('/checkOut', function(req, res, next){
     })
   }
 })
-
 module.exports = router;
