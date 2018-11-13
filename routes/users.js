@@ -67,4 +67,27 @@ router.get('/checkOut', function(req, res, next){
     })
   }
 })
+// 购物车列表接口
+router.get('/cartList',function(req, res, next){
+  let param = {
+    userId:req.cookies.userId
+  }
+  User.findOne(param, function(err, doc){
+    if(err){
+      res.json({
+        status:'1',
+        msg:err.message,
+        result:''
+      })
+    }else{
+      if(doc) {
+        res.json({
+          status:'0',
+          msg:'',
+          result:doc.cartList
+        })
+      }
+    }
+  })
+})
 module.exports = router;

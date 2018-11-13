@@ -112,17 +112,19 @@ router.post("/addCart", function(req, res, next) {
                             // 这样是无法把这两个属性保存起来的，解决办法：https://www.cnblogs.com/bfwbfw/p/7899797.html
                             // doc.productNum = 1;
                             // doc.checked = 1;
-                            newobj = {//新创建一个对象，实现转换mongoose不能直接增加属性的坑
-                                productNum: "1",
-                                checked: "1",
-                                productId: doc.productId,
-                                producName: doc.producName,
-                                salePrice: doc.salePrice,
-                                productName: doc.productName,
-                                productImage: doc.productImage,
+                            // doc.productImage = doc.productImage;
+                            let newobj = {//新创建一个对象，实现转换mongoose不能直接增加属性的坑
+                                    "productId": doc.productId,
+                                    "productName": doc.producName,
+                                    "salePrice": doc.salePrice,
+                                    "productImage": doc.productImage,
+                                    "productNum": 1,
+                                    "checked": 1,
                             }
+                            // doc.productNum = "1"
+                            // doc.checked = "1"
                             userDoc.cartList.push(newobj)
-                            userDoc.save(function (err2, doc) {
+                            userDoc.save(function (err2, doc3) {
                                 if(err2){
                                     res.json({
                                         status: '1',
@@ -131,7 +133,7 @@ router.post("/addCart", function(req, res, next) {
                                 }else{
                                     res.json({
                                         status: '0',
-                                        msg:'121',
+                                        msg:'',
                                         result: 'success'
                                     })
                                 }
