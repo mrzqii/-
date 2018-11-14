@@ -90,4 +90,33 @@ router.get('/cartList',function(req, res, next){
     }
   })
 })
+// 删除购物车
+router.post('/delCart',function(req, res, next){
+  let userId = req.cookies.userId
+  let productId = req.body.productId
+  // https://blog.csdn.net/frozenshore/article/details/51598510
+  User.update({
+    'userId':userId
+  },{
+    $pull:{
+      'cartList':{
+        'productId':productId
+      }
+    }
+  },function(err, doc){
+    if(err){
+      res.json({
+        status:'1',
+        msg:err.message,
+        result:''
+      })
+    }else{
+      res.json({
+        status:'0',
+        msg:'',
+        result:'success'
+      })
+    }
+  })
+})
 module.exports = router;
